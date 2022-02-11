@@ -1,16 +1,8 @@
-# Flutter Markdown
+# Flutter Markdown X
 
-**Deprecated**
+Enhanced version of **flutter_markdwon**.
 
-This version is forked from flutter_markdwon. The improvement features are as follows:
-
-1. Add PositionableMarkdown which returned a SliverList widget, it could scroll to the specified index. (Reference to [scroll_to_index](https://github.com/quire-io/scroll-to-index)).
-
-A markdown renderer for Flutter. It supports the
-[original format](https://daringfireball.net/projects/markdown/), but no inline
-HTML.
-
-## Alternative Solutions of superscript and subscript text
+Add PositionableMarkdown widget which returned a SliverList widget, it could scroll to the specified index, and get the current index in viewport. (Reference to [scroll_to_index](https://github.com/quire-io/scroll-to-index), [inview_notifier_list](https://github.com/rvamsikrishna/inview_notifier_list)).
 
 ```dart
 unicode_map = {

@@ -35,9 +35,8 @@ class InViewNotifier extends StatefulWidget {
   final SliverAppBar appbar;
   final EdgeInsets sliverPadding;
   final AutoScrollController controller;
-  int _currentViewIndex = 1;
 
-  InViewNotifier({
+  const InViewNotifier({
     Key? key,
     this.endNotificationOffset = 0.0,
     this.onListEndReached,
@@ -64,6 +63,7 @@ class InViewNotifier extends StatefulWidget {
 class _InViewNotifierState extends State<InViewNotifier> {
   InViewState? _inViewState;
   StreamController<ScrollNotification>? _streamController;
+  int _currentViewIndex = 1;
 
   @override
   void initState() {
@@ -125,7 +125,7 @@ class _InViewNotifierState extends State<InViewNotifier> {
                         id: idx,
                         builder: (BuildContext context, bool isInView, Widget? child) {
                           if (isInView) {
-                            widget._currentViewIndex = idx;
+                            _currentViewIndex = idx;
                           }
                           if (widget.slivers![i] is! SizedBox) {
                             return AutoScrollTag(
@@ -166,7 +166,7 @@ class _InViewNotifierState extends State<InViewNotifier> {
           //   _streamController!.add(notification);
           // }
           if (notification is ScrollEndNotification) {
-            widget.notifyHandler(widget._currentViewIndex, maxScroll, offset);
+            widget.notifyHandler(_currentViewIndex, maxScroll, offset);
           }
           return false;
         },
