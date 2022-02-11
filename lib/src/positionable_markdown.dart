@@ -9,6 +9,7 @@ class PositionableMarkdown extends MarkdownWidget {
     Key? key,
     required this.controller,
     required this.appbar,
+    required this.notifyHandler,
     required String data,
     this.padding = const EdgeInsets.only(top: 4, bottom: 24, left: 15, right: 15),
     bool selectable = false,
@@ -49,6 +50,7 @@ class PositionableMarkdown extends MarkdownWidget {
   final AutoScrollController controller;
   final EdgeInsets padding;
   final SliverAppBar appbar;
+  final void Function(int, double, double) notifyHandler;
 
   @override
   Widget build(BuildContext context, List<Widget>? children) {
@@ -61,7 +63,7 @@ class PositionableMarkdown extends MarkdownWidget {
       },
       sliverPadding: padding,
       slivers: children,
-      notifyHandler: (int currentViewIndex, double maxScroll, double offset) {},
+      notifyHandler: notifyHandler,
     );
   }
 }

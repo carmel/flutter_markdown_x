@@ -17,7 +17,7 @@ class InViewNotifier extends StatefulWidget {
   ///The distance from the bottom of the list where the [onListEndReached] should be invoked.
   final double endNotificationOffset;
 
-  final Function(int currentViewIndex, double maxScroll, double offset) notifyHandler;
+  final void Function(int currentViewIndex, double maxScroll, double offset) notifyHandler;
 
   ///The function that is invoked when the list scroll reaches the end
   ///or the [endNotificationOffset] if provided.
