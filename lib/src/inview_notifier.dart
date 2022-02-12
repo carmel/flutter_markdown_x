@@ -63,7 +63,7 @@ class InViewNotifier extends StatefulWidget {
 class _InViewNotifierState extends State<InViewNotifier> {
   InViewState? _inViewState;
   StreamController<ScrollNotification>? _streamController;
-  int _currentViewIndex = 1;
+  int _inviewIndex = 1;
 
   @override
   void initState() {
@@ -124,10 +124,8 @@ class _InViewNotifierState extends State<InViewNotifier> {
                     return InViewNotifierWidget(
                         id: idx,
                         builder: (BuildContext context, bool isInView, Widget? child) {
-                          if (isInView) {
-                            _currentViewIndex = idx;
-                          }
                           if (widget.slivers![i] is! SizedBox) {
+                            if (isInView) _inviewIndex = idx;
                             return AutoScrollTag(
                               key: ValueKey(idx),
                               controller: widget.controller,
@@ -166,7 +164,7 @@ class _InViewNotifierState extends State<InViewNotifier> {
           //   _streamController!.add(notification);
           // }
           if (notification is ScrollEndNotification) {
-            widget.notifyHandler(_currentViewIndex, maxScroll, offset);
+            widget.notifyHandler(_inviewIndex, maxScroll, offset);
           }
           return false;
         },

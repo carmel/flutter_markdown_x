@@ -222,6 +222,7 @@ class _PositionableMarkdownDemoState extends State<PositionableMarkdownDemo> {
                                   }),
                             ],
                           ),
+                          notifyHandler: (idx, maxScroll, offset) {},
                         );
                       } else {
                         return SliverToBoxAdapter(child: const CircularProgressIndicator());
