@@ -6,5 +6,4 @@
 library flutter_markdown_x;
 
 export 'src/positionable_markdown.dart';
-export 'src/inview_notifier.dart';
 export 'src/scroll_to.dart';

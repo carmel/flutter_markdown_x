@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown_x/src/inview_notifier.dart';
+import 'package:flutter_markdown_x/src/scroll_tag.dart';
 import 'package:flutter_markdown_x/src/scroll_to.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -50,20 +50,46 @@ class PositionableMarkdown extends MarkdownWidget {
   final AutoScrollController controller;
   final EdgeInsets padding;
   final SliverAppBar appbar;
-  final void Function(int, double, double) notifyHandler;
+  final void Function(double, double) notifyHandler;
 
   @override
   Widget build(BuildContext context, List<Widget>? children) {
-    return InViewNotifier(
-      appbar: appbar,
-      controller: controller,
-      inViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) {
-        final goldenSelection = viewPortDimension - 0.618 * viewPortDimension;
-        return deltaTop < goldenSelection + 50 && deltaBottom > goldenSelection - 50;
+    return NotificationListener<ScrollNotification>(
+      child: CustomScrollView(
+        controller: controller,
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        slivers: <Widget>[
+          appbar,
+          SliverPadding(
+            padding: padding,
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, i) {
+                  if (children![i] is! SizedBox) {
+                    return AutoScrollTag(
+                      key: ValueKey(i),
+                      controller: controller,
+                      index: i + 1,
+                      child: children[i],
+                    );
+                  }
+                  return const SizedBox();
+                },
+                childCount: children?.length,
+              ),
+            ),
+          ),
+        ],
+      ),
+      onNotification: (ScrollNotification notification) {
+        final double maxScroll = notification.metrics.maxScrollExtent;
+        final offset = notification.metrics.pixels;
+        if (notification is ScrollEndNotification) {
+          notifyHandler(maxScroll, offset);
+        }
+        return false;
       },
-      sliverPadding: padding,
-      slivers: children,
-      notifyHandler: notifyHandler,
     );
   }
 }
