@@ -59,7 +59,7 @@ class PositionableMarkdown extends MarkdownWidget {
       controller: controller,
       inViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) {
         final goldenSelection = viewPortDimension - 0.618 * viewPortDimension;
-        return deltaTop < goldenSelection && deltaBottom > goldenSelection;
+        return deltaTop < goldenSelection + 50 && deltaBottom > goldenSelection - 50;
       },
       sliverPadding: padding,
       slivers: children,
